@@ -1,20 +1,16 @@
 using UnityEngine;
 
-// INHERITANCE
+// // INHERITANCE
 public class Fish : Animal
 {
-    // POLYMORPHISM
+    // // POLYMORPHISM
     protected override void Speak()
     {
-        Debug.Log($"{AnimalName} says: Blub... blub...");
+        DisplayText($"{AnimalName} spins around and says: Blub... blub...");
     }
 
-    // POLYMORPHISM
     protected override void Move()
     {
-        Debug.Log($"{AnimalName} spins around!");
-        
-        // Rotates the capsule 45 degrees on its Y axis every click
         transform.Rotate(0, 45f, 0); 
     }
 }

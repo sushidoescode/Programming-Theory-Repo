@@ -1,20 +1,16 @@
 using UnityEngine;
 
-// INHERITANCE
+// // INHERITANCE
 public class Bird : Animal
 {
-    // POLYMORPHISM
+    // // POLYMORPHISM
     protected override void Speak()
     {
-        Debug.Log($"{AnimalName} says: Tweet! Tweet!");
+        DisplayText($"{AnimalName} floats upward and says: Tweet! Tweet!");
     }
 
-    // POLYMORPHISM
     protected override void Move()
     {
-        Debug.Log($"{AnimalName} floats upward!");
-        
-        // Moves the sphere up, but slower than the dog
         transform.Translate(Vector3.up * 0.2f);
     }
 }

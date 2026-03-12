@@ -1,12 +1,12 @@
 using UnityEngine;
+using TMPro; 
 
 public class Animal : MonoBehaviour
 {
-    // --- ENCAPSULATION ---
-    // The data is private, protected from outside interference
+    // // ENCAPSULATION
+    // Protecting the data so it can't be set to an invalid value
     [SerializeField] private string m_AnimalName = "Unknown";
     
-    // The public property controls HOW other scripts get or set the name
     public string AnimalName
     {
         get { return m_AnimalName; }
@@ -14,7 +14,6 @@ public class Animal : MonoBehaviour
         {
             if (string.IsNullOrEmpty(value) || value.Length > 10)
             {
-                Debug.LogWarning("Name is invalid or too long! Defaulting to 'Unknown'.");
                 m_AnimalName = "Unknown";
             }
             else
@@ -24,33 +23,45 @@ public class Animal : MonoBehaviour
         }
     }
 
-    // --- ABSTRACTION ---
-    // The player just clicks the object and calls this one simple method.
-    // They don't need to know the complex steps happening inside.
+    private TextMeshProUGUI m_DialogText;
+
+    private void Start()
+    {
+        // Automatically find our UI text on screen so we don't have to drag and drop!
+        m_DialogText = GameObject.Find("DialogText").GetComponent<TextMeshProUGUI>();
+    }
+
     private void OnMouseDown()
     {
         Interact();
     }
 
+    // // ABSTRACTION
+    // The player clicks, and this handles the rest without exposing the steps.
     public void Interact()
     {
-        // 1. Log the interaction
-        Debug.Log($"You interacted with {AnimalName}.");
-        
-        // 2. Call the internal behaviors
         Speak();
         Move();
     }
 
-    // --- POLYMORPHISM (Prep) ---
-    // 'virtual' means: "This is the default action, but my children can override it!"
+    // // POLYMORPHISM 
+    // Virtual methods allow child classes to override these behaviors
     protected virtual void Speak()
     {
-        Debug.Log("The animal makes a generic noise.");
+        DisplayText("The animal makes a generic noise.");
     }
 
     protected virtual void Move()
     {
-        Debug.Log("The animal wiggles slightly.");
+        // Default wiggle
+    }
+
+    // A helper method to push text to our UI bubble instead of the Console
+    protected void DisplayText(string text)
+    {
+        if (m_DialogText != null)
+        {
+            m_DialogText.text = text;
+        }
     }
 }
